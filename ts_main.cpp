@@ -1,4 +1,7 @@
 
+//#pragma GCC optimize( "O3,unroll-loops" )
+//#pragma GCC target( "avx2,bmi,bmi2,popcnt,lzcnt" )
+
 #include "ts_pch.hpp"
 
 #include "ts_scoped_fd_subst.hpp"

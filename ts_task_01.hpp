@@ -13,19 +13,21 @@ class task_01 : public task {
 public:
 	task_01() : task( "Parse integers", t_divisor, t_in_size, t_out_size ) {}
 
-	void generate_input( std::mt19937_64 & generator ) override {
-
-		std::uniform_int_distribution <int32_t> dist( 0 );
+	void generate_input( random_generator_t & generator ) override {
+		int_distribution_t <int32_t> dist( 0 );
 
 		uint64_t sum = 0;
 
 		char * p_stdin = m_stdin.data<char>();
+
 		for ( size_t i = 0; i < t_lines; i++ ) {
 			int32_t value = dist( generator );
-			int len = sprintf( p_stdin, "%d\n", value );
-			p_stdin += len;
-
 			sum += value;
+
+			// Faster than sprintf.
+			std::string s = std::to_string( value );
+			for ( char ch : s ) *p_stdin++ = ch;
+			*p_stdin++ = '\n';
 		}
 
 		sprintf( m_expected.data<char>(), "%zu", sum );

@@ -2,6 +2,14 @@
 
 namespace ts {
 
+// std::mt19937_64
+// __gnu_cxx::sfmt19937_64 (from #include <ext/random>)
+using random_generator_t	= __gnu_cxx::sfmt19937_64;
+
+template <typename T = int32_t>
+using int_distribution_t	= std::uniform_int_distribution <T>;
+
+
 // TODO: add shm for stderr?
 class task {
 	std::string	m_name;
@@ -29,7 +37,7 @@ public:
 	//std::string name()	const { return m_name; }
 	//int score_divisor()	const { return m_score_divisor; }
 
-	virtual void generate_input( std::mt19937_64 & ) = 0;
+	virtual void generate_input( random_generator_t & ) = 0;
 
 	virtual bool check_result() {
 
@@ -43,7 +51,7 @@ public:
 
 		std::random_device	rd;
 		std::seed_seq		seed{ rd(), rd(), rd(), rd(), rd(), rd(), rd(), rd() };
-		std::mt19937_64		random_generator( seed );
+		random_generator_t	random_generator( seed );
 
 		ts::timer	timer_child;
 		uint64_t	score_sum = 0;

@@ -1,16 +1,7 @@
 #pragma once
 
-#include <cstdio>
-#include <cstddef>
-#include <cstdint>
-#include <cstdlib>
-#include <cassert>
-#include <cstring>
-
-//#include <memory>
-//#include <string>
-//#include <random>
 #include <bits/stdc++.h>
+#include <ext/random>
 
 #include <fcntl.h>
 #include <unistd.h>

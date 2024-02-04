@@ -13,14 +13,14 @@ class task_02 : public task {
 public:
 	task_02() : task( "Unique strings", t_divisor, t_in_size, t_out_size ) {}
 
-	void generate_input( std::mt19937_64 & generator ) override {
+	void generate_input( random_generator_t & generator ) override {
 
 	    std::unordered_set <std::string> tokens;
 
-		const char * chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@#%*";
+		constexpr const char * chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@#%*";
 
-		std::uniform_int_distribution <> dist_len( 1, 15 );
-		std::uniform_int_distribution <> dist_chr( 0, strlen( chars ) - 1 );
+		int_distribution_t <> dist_len( 1, 15 );
+		int_distribution_t <> dist_chr( 0, strlen( chars ) - 1 );
 
 		char * p_stdin = m_stdin.data<char>();
 
