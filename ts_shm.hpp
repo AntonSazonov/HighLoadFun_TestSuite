@@ -7,6 +7,7 @@ class shm {
 	bool		m_is_valid	= false;
 	std::string	m_name;
 	size_t		m_size_reserved;
+//	size_t		m_size_actual;
 	int			m_fd;
 	void *		m_ptr;
 
@@ -14,6 +15,7 @@ public:
 	shm( const std::string & name, size_t size_reserved )
 		: m_name( name )
 		, m_size_reserved( size_reserved )
+//		, m_size_actual( size_reserved )
 	{
 		m_fd = shm_open( m_name.c_str(), O_CREAT | O_TRUNC/*O_EXCL*/ | O_RDWR, 0/*mode*/ );
 		if ( m_fd == -1 ) {
@@ -40,11 +42,26 @@ public:
 
 	virtual ~shm() {
 		if ( operator bool () ) {
+			munmap( m_ptr, m_size_reserved );
 			shm_unlink( m_name.c_str() );
 		}
 	}
 
 	constexpr explicit operator bool () const { return m_is_valid; }
+
+	void reset() {
+//		m_size_actual = size;
+		if ( ftruncate( m_fd, m_size_reserved ) == -1 ) {
+			perror( "ftruncate()" );
+		}
+	}
+
+	void resize( size_t size ) {
+//		m_size_actual = size;
+		if ( ftruncate( m_fd, size ) == -1 ) {
+			perror( "ftruncate()" );
+		}
+	}
 
 	std::string			name()	const { return m_name; }
 	constexpr size_t	size_reserved()	const { return m_size_reserved; }
@@ -60,10 +77,13 @@ public:
 
 	// Real size
 	size_t size() const {
+//		return m_size_actual;
+#if 1
 		size_t cur = lseek( m_fd, 0, SEEK_CUR );
 		size_t end = lseek( m_fd, 0, SEEK_END );
 		lseek( m_fd, cur, SEEK_SET );
 		return end;
+#endif
 	}
 
 

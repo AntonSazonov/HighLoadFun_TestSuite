@@ -24,8 +24,8 @@ public:
 	task( const std::string & name, int score_divisor, size_t stdin_max_size, size_t stdout_max_size )
 		: m_name( name )
 		, m_score_divisor( score_divisor )
-		, m_stdin( "/ts_stdin", stdin_max_size )
-		, m_stdout( "/ts_stdout", stdout_max_size )
+		, m_stdin   ( "/ts_stdin"   , stdin_max_size )
+		, m_stdout  ( "/ts_stdout"  , stdout_max_size )
 		, m_expected( "/ts_expected", stdout_max_size ) {}
 
 	virtual ~task() = default;
@@ -47,7 +47,7 @@ public:
 
 	bool run( const std::string & executable, int iterations = 3 ) {
 
-		fprintf( stderr, " # Testing '%s', %d iteration%s...\n", m_name.c_str(), iterations, iterations > 1 ? "s" : "" );
+		printf( " # Testing '%s', %d iteration%s...\n", m_name.c_str(), iterations, iterations > 1 ? "s" : "" );
 
 		std::random_device	rd;
 		std::seed_seq		seed{ rd(), rd(), rd(), rd(), rd(), rd(), rd(), rd() };
@@ -57,15 +57,18 @@ public:
 		uint64_t	score_sum = 0;
 
 		for ( int i = 0; i < iterations; i++ ) {
+
+			m_stdin.reset();
+
+			m_stdin.rewind();
 			m_stdout.rewind();
 
-			fprintf( stderr, "\n Iteration #%2d:\n", i + 1 );
-			fprintf( stderr, "   Generating input data..." );
+			printf( "\n Iteration #%2d:\n", i + 1 );
+			printf( "   Generating input data..." );
 
 			ts::timer <RUSAGE_SELF> timer_self;
 			generate_input( random_generator );
-			fprintf( stderr, " %.2f secs.\n", timer_self.us() / 1e6 );
-
+			printf( " %.2f secs., size: %zu bytes\n", timer_self.us() / 1e6, m_stdin.size() );
 			//fflush( stdout );
 
 			{

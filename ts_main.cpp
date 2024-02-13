@@ -11,6 +11,7 @@
 #include "ts_task.hpp"
 #include "ts_task_01.hpp"
 #include "ts_task_02.hpp"
+#include "ts_task_17.hpp"
 
 int main( int argc, const char * args[] ) {
 
@@ -65,8 +66,9 @@ int main( int argc, const char * args[] ) {
 
 	std::unique_ptr <ts::task> p_task;
 	switch ( task_id ) {
-		case 1: p_task = std::unique_ptr<ts::task>( new (std::nothrow) ts::task_01 ); break;
-		case 2: p_task = std::unique_ptr<ts::task>( new (std::nothrow) ts::task_02 ); break;
+		case  1: p_task = std::unique_ptr<ts::task>( new (std::nothrow) ts::task_01 ); break;
+		case  2: p_task = std::unique_ptr<ts::task>( new (std::nothrow) ts::task_02 ); break;
+		case 17: p_task = std::unique_ptr<ts::task>( new (std::nothrow) ts::task_17 ); break;
 
 		default:
 			printf( " No such task %d.\n", task_id );
