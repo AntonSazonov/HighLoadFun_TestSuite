@@ -13,9 +13,8 @@ class task_01 : public task {
 public:
 	task_01() : task( "Parse integers", t_divisor, t_in_size, t_out_size ) {}
 
-	void generate_input( random_generator_t & generator ) override {
+	bool generate_input( random_generator_t & generator ) override {
 		int_distribution_t <int32_t> dist;
-//		int_distribution_t <int32_t> dist( 1, std::numeric_limits<int32_t>::max() );
 
 		uint64_t sum = 0;
 
@@ -81,6 +80,8 @@ public:
 
 		// Test incorrect result
 		//m_expected.data<char>()[0]++;
+
+		return true;
 	}
 }; // class task_01
 

@@ -1,9 +1,5 @@
 
-//#pragma GCC optimize( "O3,unroll-loops" )
-//#pragma GCC target( "avx2,bmi,bmi2,popcnt,lzcnt" )
-
 #include "ts_pch.hpp"
-
 #include "ts_scoped_fd_subst.hpp"
 #include "ts_memory_view.hpp"
 #include "ts_shm.hpp"
@@ -12,6 +8,7 @@
 #include "ts_task_01.hpp"
 #include "ts_task_02.hpp"
 #include "ts_task_17.hpp"
+#include "ts_task_18.hpp"
 
 int main( int argc, const char * args[] ) {
 
@@ -69,6 +66,7 @@ int main( int argc, const char * args[] ) {
 		case  1: p_task = std::unique_ptr<ts::task>( new (std::nothrow) ts::task_01 ); break;
 		case  2: p_task = std::unique_ptr<ts::task>( new (std::nothrow) ts::task_02 ); break;
 		case 17: p_task = std::unique_ptr<ts::task>( new (std::nothrow) ts::task_17 ); break;
+		case 18: p_task = std::unique_ptr<ts::task>( new (std::nothrow) ts::task_18 ); break;
 
 		default:
 			printf( " No such task %d.\n", task_id );

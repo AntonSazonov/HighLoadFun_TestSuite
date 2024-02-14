@@ -37,7 +37,7 @@ public:
 	//std::string name()	const { return m_name; }
 	//int score_divisor()	const { return m_score_divisor; }
 
-	virtual void generate_input( random_generator_t & ) = 0;
+	virtual bool generate_input( random_generator_t & ) = 0;
 
 	virtual bool check_result() {
 
@@ -58,6 +58,7 @@ public:
 
 		for ( int i = 0; i < iterations; i++ ) {
 
+			// Truncate to reserved size
 			m_stdin.reset();
 
 			m_stdin.rewind();
@@ -65,9 +66,16 @@ public:
 
 			printf( "\n Iteration #%2d:\n", i + 1 );
 			printf( "   Generating input data..." );
+			fflush( stdout );
 
+			// Child process timer...
 			ts::timer <RUSAGE_SELF> timer_self;
-			generate_input( random_generator );
+
+			if ( !generate_input( random_generator ) ) {
+				fprintf( stderr, "\ngenerate_input(): failed\n" );
+				return false;
+			}
+
 			printf( " %.2f secs., size: %zu bytes\n", timer_self.us() / 1e6, m_stdin.size() );
 			//fflush( stdout );
 
@@ -100,8 +108,8 @@ public:
 				printf( "         Result: passed\n" );
 			} else {
 				printf( "         Result: not passed\n" );
-				printf( "       Expected: [%.*s]\n", int(m_expected.mem_view<char>().size()), m_expected.mem_view<char>().data() );
-				printf( "            Got: [%.*s]\n", int(m_stdout  .mem_view<char>().size()), m_stdout  .mem_view<char>().data() );
+//				printf( "       Expected: [%.*s]\n", int(m_expected.mem_view<char>().size()), m_expected.mem_view<char>().data() );
+//				printf( "            Got: [%.*s]\n", int(m_stdout  .mem_view<char>().size()), m_stdout  .mem_view<char>().data() );
 			}
 			printf( "           Time: %5.2f secs.\n", time_ns / 1e9);
 			printf( "          Score: %zu\n", score );

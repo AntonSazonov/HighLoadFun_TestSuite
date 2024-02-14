@@ -11,7 +11,7 @@ class task_17 : public task {
 public:
 	task_17() : task( "Blue color from RGBA", t_divisor, t_in_size, t_out_size ) {}
 
-	void generate_input( random_generator_t & generator ) override {
+	bool generate_input( random_generator_t & generator ) override {
 		int_distribution_t <uint32_t> dist;
 
 		uint32_t * p_stdin = m_stdin.data<uint32_t>();
@@ -22,6 +22,8 @@ public:
 			*p_stdin++ = value;
 			*p_exp++ = value >> 16 & 0xff;
 		}
+
+		return true;
 	}
 }; // class task_17
 

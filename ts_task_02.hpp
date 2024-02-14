@@ -13,7 +13,7 @@ class task_02 : public task {
 public:
 	task_02() : task( "Unique strings", t_divisor, t_in_size, t_out_size ) {}
 
-	void generate_input( random_generator_t & generator ) override {
+	bool generate_input( random_generator_t & generator ) override {
 
 	    std::unordered_set <std::string> tokens;
 
@@ -47,6 +47,8 @@ public:
 
 		// Test incorrect result
 		//m_expected.data<char>()[0]++;
+
+		return true;
 	}
 }; // class task_02
 
