@@ -10,3 +10,5 @@
 #include <sys/sysinfo.h>
 #include <sys/mman.h>
 #include <sys/resource.h>
+
+#include <immintrin.h>

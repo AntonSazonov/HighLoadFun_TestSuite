@@ -54,6 +54,8 @@ public:
 		random_generator_t	random_generator( seed );
 
 		ts::timer	timer_child;
+
+		uint64_t	time_sum = 0;
 		uint64_t	score_sum = 0;
 
 		for ( int i = 0; i < iterations; i++ ) {
@@ -65,7 +67,7 @@ public:
 			m_stdout.rewind();
 
 			printf( "\n Iteration #%2d:\n", i + 1 );
-			printf( "   Generating input data..." );
+			printf( "   Generating input data... " );
 			fflush( stdout );
 
 			// Child process timer...
@@ -101,6 +103,7 @@ public:
 
 			uint64_t time_ns	= timer_child.ns();
 			uint64_t score		= time_ns / m_score_divisor;
+			time_sum += time_ns;
 			score_sum += score;
 
 			bool is_correct = check_result();
@@ -108,15 +111,19 @@ public:
 				printf( "         Result: passed\n" );
 			} else {
 				printf( "         Result: not passed\n" );
-//				printf( "       Expected: [%.*s]\n", int(m_expected.mem_view<char>().size()), m_expected.mem_view<char>().data() );
-//				printf( "            Got: [%.*s]\n", int(m_stdout  .mem_view<char>().size()), m_stdout  .mem_view<char>().data() );
+
+				if ( m_expected.mem_view<char>().size() < 80 ) {
+					printf( "       Expected: [%.*s]\n", int(m_expected.mem_view<char>().size()), m_expected.mem_view<char>().data() );
+					printf( "            Got: [%.*s]\n", int(m_stdout  .mem_view<char>().size()), m_stdout  .mem_view<char>().data() );
+				}
 			}
-			printf( "           Time: %5.2f secs.\n", time_ns / 1e9);
+			printf( "           Time: %5.2f secs.\n", time_ns / 1e9 );
 			printf( "          Score: %zu\n", score );
 
 			if ( !is_correct ) return false;
 		}
-		printf( "\n  Avarage score: %zu\n", score_sum / iterations );
+		printf( "\n  Avarage time : %5.2f secs.\n", time_sum / 1e9 / iterations );
+		printf( "  Avarage score: %zu\n", score_sum / iterations );
 		return true;
 	}
 }; // class task
