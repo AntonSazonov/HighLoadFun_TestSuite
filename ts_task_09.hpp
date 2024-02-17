@@ -51,9 +51,9 @@ public:
 		// Sort indices...
 #if 0
 		std::sort( p_offsets, p_offsets + t_UUIDs, [&]( uint32_t a, uint32_t b ) -> bool {
-					return std::string_view( m_stdin.data<char>() + a, t_UUID_len )
-						 < std::string_view( m_stdin.data<char>() + b, t_UUID_len );
-				} );
+				return std::string_view( m_stdin.data<char>() + a, t_UUID_len )
+					 < std::string_view( m_stdin.data<char>() + b, t_UUID_len );
+			} );
 #else
 		std::sort( p_offsets, p_offsets + t_UUIDs, [&]( uint32_t a, uint32_t b ) -> bool {
 				constexpr const uint8_t shuffle_mask[16] = { 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 };
@@ -88,7 +88,7 @@ public:
 									 m_stdin.data<char>() + p_offsets[i], t_line_len );
 		}
 
-#if 1
+#if 0
 		// Print first 10 lines...
 		printf( "\n *** First 10 UUIDs:\n" );
 		for ( int i = 0; i < 10; i++ ) {

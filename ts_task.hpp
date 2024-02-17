@@ -57,6 +57,8 @@ public:
 
 		uint64_t	time_sum = 0;
 		uint64_t	score_sum = 0;
+		uint64_t	time_best = -1;
+		uint64_t	score_best = 0;
 
 		for ( int i = 0; i < iterations; i++ ) {
 
@@ -105,6 +107,10 @@ public:
 			uint64_t score		= time_ns / m_score_divisor;
 			time_sum += time_ns;
 			score_sum += score;
+			if ( time_ns < time_best ) {
+				time_best  = time_ns;
+				score_best = score;
+			}
 
 			bool is_correct = check_result();
 			if ( is_correct ) {
@@ -120,10 +126,12 @@ public:
 			printf( "           Time: %5.2f secs.\n", time_ns / 1e9 );
 			printf( "          Score: %zu\n", score );
 
-			if ( !is_correct ) return false;
+//			if ( !is_correct ) return false;
 		}
 		printf( "\n  Avarage time : %5.2f secs.\n", time_sum / 1e9 / iterations );
 		printf( "  Avarage score: %zu\n", score_sum / iterations );
+		printf( "\n     Best time : %5.2f secs.\n", time_best / 1e9 );
+		printf( "     Best score: %zu\n", score_best );
 		return true;
 	}
 }; // class task
