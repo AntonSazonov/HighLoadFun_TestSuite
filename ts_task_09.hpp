@@ -13,24 +13,33 @@ public:
 	task_09() : task( "Sort UUIDs", t_divisor, t_size, t_size ) {}
 
 	bool generate_input( random_generator_t & gen ) override {
-		int_distribution_t <uint32_t> a;
-
-		int_distribution_t <uint16_t> b;
-		int_distribution_t <uint16_t> c;
-		int_distribution_t <uint16_t> d;
-
-		int_distribution_t <uint16_t> e;
-		int_distribution_t <uint16_t> f;
-		int_distribution_t <uint16_t> g;
-
-//		"01c39d6f-a905-41b5-b960-55f5be445bf8\n"
-//		"790455cb-9813-4298-87ec-9ede1dc38e10\n"
-//		"8ff38a09-f995-467b-9d07-5536f621402e\n";
+		int_distribution_t <uint64_t> dist;
 
 		char * p_src = m_stdin.data<char>();
 		size_t n = t_UUIDs;
 		while ( n-- ) {
-			p_src += sprintf( p_src, "%08x-%04x-%04x-%04x-%04x%04x%04x\n", a( gen ), b( gen ), c( gen ), d( gen ), e( gen ), f( gen ), g( gen ) );
+			// ~13 secs.
+			uint64_t x = dist( gen );
+			uint64_t y = dist( gen );
+
+			uint32_t a = x >> 32;
+			uint16_t b = x >> 16 & 0xffff;
+			uint16_t c = x       & 0xffff;
+
+			uint16_t d = y >> 16 & 0xffff;
+			uint16_t e = y       & 0xffff;
+			uint32_t f = y >> 32;
+
+			p_src += sprintf( p_src, "%08x-%04x-%04x-%04x-%04x%08x\n", a, b, c, d, e, f );
+
+			//fmt::format_to( p_src, "{:08x}-{:04x}-{:04x}-{:04x}-{:04x}{:08x}\n", a, b, c, d, e, f );
+			//p_src += t_line_len;
+
+			// "8ff38a09-f995-467b-9d07-5536f621402e\n";
+			//fmt::format_to( p_src, "{:08x}-{:04x}-{:04x}-{:04x}-{:04x}{:04x}{:04x}\n", a( gen ), b( gen ), c( gen ), d( gen ), e( gen ), f( gen ), g( gen ) );
+			//p_src += t_line_len;
+
+			//p_src += sprintf( p_src, "%08x-%04x-%04x-%04x-%04x%04x%04x\n", a( gen ), b( gen ), c( gen ), d( gen ), e( gen ), f( gen ), g( gen ) );
 		}
 		printf( "G" ); // Generated
 		fflush( stdout );

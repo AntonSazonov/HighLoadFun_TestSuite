@@ -12,3 +12,6 @@
 #include <sys/resource.h>
 
 #include <immintrin.h>
+
+#define FMT_HEADER_ONLY
+#include <fmt/core.h>
