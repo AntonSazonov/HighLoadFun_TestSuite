@@ -113,15 +113,16 @@ public:
 			}
 
 			bool is_correct = check_result();
+
+			if ( m_expected.mem_view<char>().size() < 80 ) {
+				printf( "       Expected: [%.*s]\n", int(m_expected.mem_view<char>().size()), m_expected.mem_view<char>().data() );
+				printf( "            Got: [%.*s]\n", int(m_stdout  .mem_view<char>().size()), m_stdout  .mem_view<char>().data() );
+			}
+
 			if ( is_correct ) {
 				printf( "         Result: passed\n" );
 			} else {
 				printf( "         Result: not passed\n" );
-
-				if ( m_expected.mem_view<char>().size() < 80 ) {
-					printf( "       Expected: [%.*s]\n", int(m_expected.mem_view<char>().size()), m_expected.mem_view<char>().data() );
-					printf( "            Got: [%.*s]\n", int(m_stdout  .mem_view<char>().size()), m_stdout  .mem_view<char>().data() );
-				}
 			}
 			printf( "           Time: %5.2f secs.\n", time_ns / 1e9 );
 			printf( "          Score: %zu\n", score );
