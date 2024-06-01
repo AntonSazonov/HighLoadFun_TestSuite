@@ -1,3 +1,0 @@
-
-close( STDIN_FILENO );
-dup2( shm_fd, STDIN_FILENO )
