@@ -58,7 +58,7 @@ public:
 		}
 
 		// Sort indices...
-#if 0
+#if 1
 		std::sort( p_offsets, p_offsets + t_UUIDs, [&]( uint32_t a, uint32_t b ) -> bool {
 				return std::string_view( m_stdin.data<char>() + a, t_UUID_len )
 					 < std::string_view( m_stdin.data<char>() + b, t_UUID_len );
