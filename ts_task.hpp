@@ -103,8 +103,9 @@ public:
 			fprintf( stderr, "m_expected.size(): %zu\n", m_expected.size() );
 #endif
 
-			uint64_t time_ns	= timer_child.ns();
-			uint64_t score		= time_ns / m_score_divisor;
+			uint64_t	time_ns		= timer_child.ns();
+			double		time_sec	= time_ns / 1e9;
+			uint64_t	score		= time_ns / m_score_divisor;
 			time_sum += time_ns;
 			score_sum += score;
 			if ( time_ns < time_best ) {
@@ -124,8 +125,10 @@ public:
 			} else {
 				printf( "         Result: not passed\n" );
 			}
-			printf( "           Time: %5.2f secs.\n", time_ns / 1e9 );
 			printf( "          Score: %zu\n", score );
+			printf( "           Time: %5.2f secs.\n", time_sec/*time_ns / 1e9*/ );
+			printf( "     stdin size: %zu bytes\n", m_stdin.size() );
+			printf( "     stdin read: %5.2f GB/s\n", m_stdin.size() / time_sec / (1024 * 1024 * 1024) );
 
 //			if ( !is_correct ) return false;
 		}
