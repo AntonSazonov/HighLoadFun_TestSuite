@@ -7,6 +7,7 @@
 #include "ts_task.hpp"
 #include "ts_task_01.hpp"
 #include "ts_task_02.hpp"
+#include "ts_task_05.hpp"
 #include "ts_task_09.hpp"
 #include "ts_task_10.hpp"
 #include "ts_task_11.hpp"
@@ -70,6 +71,7 @@ int main( int argc, const char * args[] ) {
 	switch ( task_id ) {
 		case  1: p_task = std::unique_ptr<ts::task>( new (std::nothrow) ts::task_01 ); break;
 		case  2: p_task = std::unique_ptr<ts::task>( new (std::nothrow) ts::task_02 ); break;
+		case  5: p_task = std::unique_ptr<ts::task>( new (std::nothrow) ts::task_05 ); break;
 		case  9: p_task = std::unique_ptr<ts::task>( new (std::nothrow) ts::task_09 ); break;
 		case 10: p_task = std::unique_ptr<ts::task>( new (std::nothrow) ts::task_10 ); break;
 		case 11: p_task = std::unique_ptr<ts::task>( new (std::nothrow) ts::task_11 ); break;
