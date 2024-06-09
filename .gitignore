@@ -2,6 +2,7 @@ x
 test_child
 tester
 ts_main
+_build*
 *.pdf
 *.log
 
