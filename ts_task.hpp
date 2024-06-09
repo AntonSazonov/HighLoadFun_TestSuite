@@ -120,10 +120,11 @@ public:
 				printf( "            Got: [%.*s]\n", int(m_stdout  .mem_view<char>().size()), m_stdout  .mem_view<char>().data() );
 			}
 
+			fmt::print( "         Result: " );
 			if ( is_correct ) {
-				printf( "         Result: passed\n" );
+				fmt::print( fg(fmt::color::light_green), "passed\n" );
 			} else {
-				printf( "         Result: not passed\n" );
+				fmt::print( fg(fmt::color::red), "not passed\n" );
 			}
 			printf( "          Score: %zu\n", score );
 			printf( "           Time: %5.2f secs.\n", time_sec/*time_ns / 1e9*/ );
