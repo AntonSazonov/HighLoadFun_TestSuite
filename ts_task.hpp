@@ -128,8 +128,10 @@ public:
 			}
 			printf( "          Score: %zu\n", score );
 			printf( "           Time: %5.2f secs.\n", time_sec/*time_ns / 1e9*/ );
-			printf( "     stdin size: %zu bytes\n", m_stdin.size() );
-			printf( "     stdin read: %5.2f GB/s\n", m_stdin.size() / time_sec / (1024 * 1024 * 1024) );
+
+			fmt::print( "     stdin read: " );
+			fmt::print( fg(fmt::color::aqua), "{:5.3}", m_stdin.size() / time_sec / (1024 * 1024 * 1024) );
+			fmt::print( " GB/s\n" );
 
 //			if ( !is_correct ) return false;
 		}
