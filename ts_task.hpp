@@ -47,7 +47,7 @@ public:
 
 	bool run( const std::string & executable, int iterations = 3 ) {
 
-		const int output_indent = 26;
+		const int output_indent = 34;
 
 		printf( " # Testing '%s', %d iteration%s...\n", m_name.c_str(), iterations, iterations > 1 ? "s" : "" );
 
