@@ -1,0 +1,2 @@
+
+ * catch Ctrl-C signal (with sigaction) to avoid "dangling" shm files in /run/shm

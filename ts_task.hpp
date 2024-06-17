@@ -47,7 +47,7 @@ public:
 
 	bool run( const std::string & executable, int iterations = 3 ) {
 
-		const int output_alignment = 24;
+		const int output_indent = 26;
 
 		printf( " # Testing '%s', %d iteration%s...\n", m_name.c_str(), iterations, iterations > 1 ? "s" : "" );
 
@@ -120,11 +120,11 @@ public:
 			bool is_correct = check_result();
 
 			if ( m_expected.mem_view<char>().size() < 80 ) {
-				fmt::print( "{: >{}}: [{:.{}}]\n", "Expected", output_alignment, m_expected.mem_view<char>().data(), m_expected.mem_view<char>().size() );
-				fmt::print( "{: >{}}: [{:.{}}]\n",      "Got", output_alignment,   m_stdout.mem_view<char>().data(),   m_stdout.mem_view<char>().size() );
+				fmt::print( "{: >{}}: [{:.{}}]\n", "Expected", output_indent, m_expected.mem_view<char>().data(), m_expected.mem_view<char>().size() );
+				fmt::print( "{: >{}}: [{:.{}}]\n",      "Got", output_indent,   m_stdout.mem_view<char>().data(),   m_stdout.mem_view<char>().size() );
 			}
 
-			fmt::print( "{: >{}}: ", "Result", output_alignment );
+			fmt::print( "{: >{}}: ", "Result", output_indent );
 
 			if ( is_correct ) {
 				fmt::print( fg(fmt::color::light_green), "passed\n" );
@@ -132,14 +132,14 @@ public:
 				fmt::print( fg(fmt::color::red), "not passed\n" );
 			}
 
-			fmt::print( "{: >{}}: {}\n", "Score", output_alignment, score );
-			fmt::print( "{: >{}}: {:.3f} secs.\n", "Time", output_alignment, time_sec );
+			fmt::print( "{: >{}}: {}\n", "Score", output_indent, score );
+			fmt::print( "{: >{}}: {:.3f} secs.\n", "Time", output_indent, time_sec );
 
 
 			float read_throughput = m_stdin.size() / time_sec / (1024 * 1024 * 1024);
 			if ( read_throughput > read_throughput_max ) read_throughput_max = read_throughput;
 
-			fmt::print( "{: >{}}: ", "Read throughput", output_alignment );
+			fmt::print( "{: >{}}: ", "Possible read throughput", output_indent );
 			fmt::print( fg(fmt::color::aqua), "{:.3f}", read_throughput );
 			fmt::print( " GB/s\n" );
 
@@ -150,12 +150,12 @@ public:
 
 		fmt::print( " {:->{}}\n", "", 50 );
 
-		fmt::print( "\n{: >{}}: {:.3f} secs.\n", "Avarage time ", output_alignment, time_sum / 1e9 / iterations );
-		fmt::print(   "{: >{}}: {}\n"          , "Avarage score", output_alignment, score_sum / iterations );
-		fmt::print( "\n{: >{}}: {:.3f} secs.\n", "Best time "   , output_alignment, time_best / 1e9 );
-		fmt::print(   "{: >{}}: {}\n"          , "Best score"   , output_alignment, score_best );
+		fmt::print( "\n{: >{}}: {:.3f} secs.\n", "Avarage time ", output_indent, time_sum / 1e9 / iterations );
+		fmt::print(   "{: >{}}: {}\n"          , "Avarage score", output_indent, score_sum / iterations );
+		fmt::print( "\n{: >{}}: {:.3f} secs.\n", "Best time "   , output_indent, time_best / 1e9 );
+		fmt::print(   "{: >{}}: {}\n"          , "Best score"   , output_indent, score_best );
 
-		fmt::print( "\n{: >{}}: ", "Max read throughput", output_alignment );
+		fmt::print( "\n{: >{}}: ", "Possible max. read throughput", output_indent );
 		fmt::print( fg(fmt::color::aqua), "{:.3f}", read_throughput_max );
 		fmt::print( " GB/s\n" );
 
