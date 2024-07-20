@@ -6,6 +6,7 @@ ts_main
 _build*
 *.pdf
 *.log
+_cmake_clang_dbg.cmd
 
 # Prerequisites
 *.d

@@ -34,9 +34,6 @@ public:
 		return m_stdin && m_stdout && m_expected;
 	}
 
-	//std::string name()	const { return m_name; }
-	//int score_divisor()	const { return m_score_divisor; }
-
 	virtual bool generate_input( random_generator_t & ) = 0;
 
 	virtual bool check_result() {
@@ -57,42 +54,43 @@ public:
 
 		ts::timer	timer_child;
 
-		uint64_t	time_sum = 0;
-		uint64_t	score_sum = 0;
-		uint64_t	time_best = -1;
-		uint64_t	score_best = 0;
+		double		time_sum	= 0;
+		uint64_t	score_sum	= 0;
+		double		time_best	= 1e5;
+		uint64_t	score_best	= 0;
 		float		read_throughput_max = 0;
 
 
-		for ( int i = 0; i < iterations; i++ ) {
+		int iter = 0;
+		for ( ; iter < iterations; iter++ ) {
 
-			// Truncate to reserved size
+			// Truncate to reserved size...
 			m_stdin.reset();
 
 			m_stdin.rewind();
 			m_stdout.rewind();
 
-			printf( "\n Iteration #%2d:\n", i + 1 );
-			printf( "   Generating input data... " );
+			fmt::print( "\n Iteration #{:2}:\n", iter + 1 );
+
+			fmt::print( "   Generating input data... " );
 			fflush( stdout );
 
 			// Child process timer...
 			ts::timer <RUSAGE_SELF> timer_self;
 
 			if ( !generate_input( random_generator ) ) {
-				fprintf( stderr, "\ngenerate_input(): failed\n" );
+				//fprintf( stderr, "\ngenerate_input(): failed\n" );
+				fmt::print( stderr, "\ngenerate_input(): failed\n" );
 				return false;
 			}
 
-			printf( " %.2f secs., size: %zu bytes\n", timer_self.us() / 1e6, m_stdin.size() );
-			//fflush( stdout );
+			fmt::print( " {:.2f} secs., size: {} bytes\n", timer_self.us() / 1e6, m_stdin.size() );
 
 			{
 				ts::scoped_fd_subst dup_stdin ( STDIN_FILENO , m_stdin .fd() );
 				ts::scoped_fd_subst dup_stdout( STDOUT_FILENO, m_stdout.fd() );
 
 				timer_child.reset();
-				//if ( system( ("./" + executable + " 2> " + executable + "_stderr.log").c_str() ) == -1 ) {
 				if ( system( ("./" + executable).c_str() ) == -1 ) {
 					perror( "system()" );
 					return false;
@@ -101,24 +99,19 @@ public:
 				fflush( stdout );
 			}
 
-#if 0
-			fprintf( stderr, "   m_stdin.size(): %zu\n",    m_stdin.size() );
-			fprintf( stderr, "  m_stdout.size(): %zu\n",   m_stdout.size() );
-			fprintf( stderr, "m_expected.size(): %zu\n", m_expected.size() );
-#endif
-
 			uint64_t	time_ns		= timer_child.ns();
 			double		time_sec	= time_ns / 1e9;
 			uint64_t	score		= time_ns / m_score_divisor;
-			time_sum += time_ns;
+			time_sum += time_sec;
 			score_sum += score;
-			if ( time_ns < time_best ) {
-				time_best  = time_ns;
+			if ( time_sec < time_best ) {
+				time_best  = time_sec;
 				score_best = score;
 			}
 
 			bool is_correct = check_result();
 
+			fmt::print( "\n" );
 			if ( m_expected.mem_view<char>().size() < 80 ) {
 				fmt::print( "{: >{}}: [{:.{}}]\n", "Expected", output_indent, m_expected.mem_view<char>().data(), m_expected.mem_view<char>().size() );
 				fmt::print( "{: >{}}: [{:.{}}]\n",      "Got", output_indent,   m_stdout.mem_view<char>().data(),   m_stdout.mem_view<char>().size() );
@@ -146,13 +139,12 @@ public:
 //			if ( !is_correct ) return false;
 		}
 
-//		fmt::format("{:\t>{}}", "", count);
-
 		fmt::print( " {:->{}}\n", "", 50 );
 
-		fmt::print( "\n{: >{}}: {:.3f} secs.\n", "Avarage time ", output_indent, time_sum / 1e9 / iterations );
-		fmt::print(   "{: >{}}: {}\n"          , "Avarage score", output_indent, score_sum / iterations );
-		fmt::print( "\n{: >{}}: {:.3f} secs.\n", "Best time "   , output_indent, time_best / 1e9 );
+		fmt::print( "\n{: >{}}: {:.3f} secs.\n", "Avarage time ", output_indent, time_sum  / iter );
+		fmt::print(   "{: >{}}: {}\n"          , "Avarage score", output_indent, score_sum / iter );
+
+		fmt::print( "\n{: >{}}: {:.3f} secs.\n", "Best time "   , output_indent, time_best );
 		fmt::print(   "{: >{}}: {}\n"          , "Best score"   , output_indent, score_best );
 
 		fmt::print( "\n{: >{}}: ", "Possible max. read throughput", output_indent );
