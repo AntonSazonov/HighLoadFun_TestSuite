@@ -41,6 +41,7 @@ add_executable( ${PROJECT_NAME}
 	ts_task_01.hpp
 	ts_task_02.hpp
 	ts_task_05.hpp
+	ts_task_08.hpp
 	ts_task_09.hpp
 	ts_task_10.hpp
 	ts_task_11.hpp
@@ -70,14 +71,14 @@ endif()
 string( REPLACE ";" " " COMPILE_OPTS_STR "${COMPILE_OPTS}" )
 
 # Output some vars...
-message( STATUS " ----------------------------------------------------------------" )
+message( STATUS "----------------------------------------------------------------" )
 message( STATUS " Compiler ID: ${CMAKE_CXX_COMPILER_ID}" )
 message( STATUS "  Build type: ${CMAKE_BUILD_TYPE}" )
 message( STATUS "  Dbg. flags: ${CMAKE_CXX_FLAGS_DEBUG}" )
 message( STATUS "  Rel. flags: ${CMAKE_CXX_FLAGS_RELEASE}" )
-message( STATUS " ----------------------------------------------------------------" )
+message( STATUS "----------------------------------------------------------------" )
 message( STATUS " Curr. flags: ${COMPILE_OPTS_STR}" )
-message( STATUS " ----------------------------------------------------------------" )
+message( STATUS "----------------------------------------------------------------" )
 
 target_include_directories( ${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR} )
 target_include_directories( ${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/3rd )
