@@ -13,7 +13,7 @@ public:
 	{
 		//m_new = dup( old_fd );
 		if ( m_new == -1 ) {
-			perror( "dup2()" );
+			perror( "dup()" );
 			return;
 		}
 
