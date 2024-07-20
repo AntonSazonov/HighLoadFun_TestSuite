@@ -3,6 +3,8 @@
 #include <bits/stdc++.h>
 #include <ext/random>
 
+#include <signal.h>
+
 #include <fcntl.h>
 #include <unistd.h>
 
