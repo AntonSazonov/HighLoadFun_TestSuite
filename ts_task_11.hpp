@@ -15,10 +15,39 @@ public:
 
 		int_distribution_t <uint32_t> dist;
 		uint32_t * p = m_stdin.data<uint32_t>();
-		auto gen = [&]{ return dist( generator ); };
-		std::generate( p, p + t_numbers, gen );
 
-//		m_expected.resize( sprintf( m_expected.data<char>(), "%zu", sum ) );
+
+		uint32_t lower = 4'000'000'000;
+		uint32_t last_min = lower;
+
+		std::multiset <uint32_t> s;
+		for ( int i = 0; i < 100; i++ ) s.insert( lower );
+
+		auto check = [&]( uint32_t value ) {
+				if ( value > last_min ) {
+					s.erase( s.begin() );
+					s.insert( value );
+					last_min = *s.begin();
+				}
+			};
+
+
+//		auto gen = [&]{ return dist( generator ); };
+//		std::generate( p, p + t_numbers, gen );
+
+		for ( size_t i = 0; i < t_numbers; i++ ) {
+			uint32_t v = dist( generator );
+			*p++ = v;
+			check( v );
+		}
+
+		uint64_t sum = 0;
+		for ( uint32_t v : s ) sum += v;
+
+		m_expected.resize( sprintf( m_expected.data<char>(), "%zu", sum ) );
+
+//		int l = sprintf( m_expected.data<char>(), "%zu", sum );
+//		m_expected.resize( l );
 
 		return true;
 	}
