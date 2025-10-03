@@ -1,2 +1,3 @@
 
  * catch Ctrl-C signal (with sigaction) to avoid "dangling" shm files in /run/shm
+ * Add flag for overriding input data size
