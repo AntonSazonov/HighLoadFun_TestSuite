@@ -84,4 +84,4 @@ target_include_directories( ${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR} )
 target_include_directories( ${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/3rd )
 
 set_target_properties     ( ${PROJECT_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR} )
-set_target_properties     ( ${PROJECT_NAME} PROPERTIES OUTPUT_NAME "ts_main" )
+set_target_properties     ( ${PROJECT_NAME} PROPERTIES OUTPUT_NAME "hlf_ts_x86-64" )
