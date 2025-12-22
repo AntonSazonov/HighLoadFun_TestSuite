@@ -6,7 +6,7 @@ namespace ts {
 // __gnu_cxx::sfmt19937_64 (from #include <ext/random>)
 using random_generator_t	= __gnu_cxx::sfmt19937_64;
 
-template <typename T = int32_t>
+template <typename T/* = int32_t*/>
 using int_distribution_t	= std::uniform_int_distribution <T>;
 
 
@@ -46,7 +46,9 @@ public:
 
 		const int output_indent = 34;
 
-		printf( " # Testing '%s', %d iteration%s...\n", m_name.c_str(), iterations, iterations > 1 ? "s" : "" );
+		fmt::print( " # Testing '" );
+		fmt::print( fg(fmt::color::yellow), "{}", m_name.c_str() );
+		fmt::print( "', {} iteration{}...\n", iterations, iterations > 1 ? "s" : "" );
 
 		std::random_device	rd;
 		std::seed_seq		seed{ rd(), rd(), rd(), rd(), rd(), rd(), rd(), rd() };
