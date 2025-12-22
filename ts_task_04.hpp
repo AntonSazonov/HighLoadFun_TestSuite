@@ -12,10 +12,13 @@ public:
 	task_04() : task( "Format integers", t_divisor, t_in_size, t_out_size ) {}
 
 	bool generate_input( random_generator_t & generator ) override {
-		int_distribution_t <> dist;
+		int_distribution_t <uint32_t> dist;
+
 		uint32_t * p_stdin = m_stdin.data<uint32_t>();
 		uint64_t CRC = 0;
-		for ( size_t i = 0; i < t_numbers; i++ ) {
+
+		size_t n = t_numbers;
+		while ( n-- ) {
 			uint32_t v = dist( generator );
 			*p_stdin++ = v;
 
