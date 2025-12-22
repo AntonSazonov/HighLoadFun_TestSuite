@@ -37,7 +37,7 @@ public:
 			} );
 #endif
 
-		sprintf( m_expected.data<char>(), "%u", p_sorted[50'000'000]);
+		sprintf( m_expected.data<char>(), "%u", p_sorted[50'000'000] );
 		return true;
 	}
 }; // class task_08
