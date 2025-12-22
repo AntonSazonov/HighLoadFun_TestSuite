@@ -48,7 +48,8 @@ add_executable( ${PROJECT_NAME}
 	ts_task_13.hpp
 	ts_task_17.hpp
 	ts_task_18.hpp
-	ts_task_19.hpp )
+	ts_task_19.hpp
+	ts_task_23.hpp )
 
 target_precompile_headers( ${PROJECT_NAME} PUBLIC
 	"$<$<COMPILE_LANGUAGE:CXX>:<ts_pch.hpp$<ANGLE-R>>" )

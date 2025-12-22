@@ -17,6 +17,7 @@
 #include "ts_task_17.hpp"
 #include "ts_task_18.hpp"
 #include "ts_task_19.hpp"
+#include "ts_task_23.hpp"
 
 namespace {
 
@@ -101,6 +102,7 @@ int main( int argc, const char * args[] ) {
 		case 17: p_task = std::unique_ptr<ts::task>( new (std::nothrow) ts::task_17 ); break;
 		case 18: p_task = std::unique_ptr<ts::task>( new (std::nothrow) ts::task_18 ); break;
 		case 19: p_task = std::unique_ptr<ts::task>( new (std::nothrow) ts::task_19 ); break;
+		case 23: p_task = std::unique_ptr<ts::task>( new (std::nothrow) ts::task_23 ); break;
 
 		default:
 			printf( " No such task %d.\n", task_id );
