@@ -44,14 +44,14 @@ public:
 
 		std::string_view char_lut{ "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@#%*" };
 
-		int_distribution_t <> dist_len( 1, 15 );
-		int_distribution_t <> dist_chr( 0, char_lut.size() - 1 );
+		int_distribution_t <uint8_t> dist_len( 1, 15 );
+		int_distribution_t <uint8_t> dist_chr( 0, char_lut.size() - 1 );
 
 		char * p_stdin = m_stdin.data<char>();
 
 		for ( size_t l = 0; l < t_lines; l++ ) {
 
-			int line_len = dist_len( generator );
+			uint8_t line_len = dist_len( generator );
 
 			char line[t_line_size];
 			for ( int i = 0; i < line_len; i++ ) {
@@ -65,6 +65,8 @@ public:
 
 			p_stdin += line_len + 1;
 		}
+
+		m_stdin.resize( p_stdin - m_stdin.data<char>() );
 
 		strcpy( m_expected.data<char>(), std::to_string( tokens.size() ).c_str() );
 
