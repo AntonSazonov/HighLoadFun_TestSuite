@@ -70,7 +70,7 @@ public:
 
 		uint64_t sum = 0;
 		for ( size_t i = 0; i < t_numbers; i++ ) {
-			uint32_t value = dist( gen );
+			uint32_t value = dist( gen ) % 2'147'483'648; // Actually, input values are in range [0;int32_t max]
 			if ( is_prime( value ) ) {
 				sum += value;
 			}
