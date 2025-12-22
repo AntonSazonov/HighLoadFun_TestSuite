@@ -2,4 +2,4 @@
 cls
 echo.
 
-wsl -e g++ -Wall -std=c++17 -O3 -march=native -fno-exceptions -fno-rtti -fcf-protection=none ts_main.cpp -I. -I./3rd -s -o hlf_ts_x86-64
+wsl -e g++ -I. -I./3rd -Wall -std=c++17 -O3 -march=native -fno-exceptions -fno-rtti -fcf-protection=none -fuse-ld=gold -s ts_main.cpp -o hlf_ts_x86-64
