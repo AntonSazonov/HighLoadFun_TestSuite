@@ -14,8 +14,8 @@ public:
 	bool generate_input( random_generator_t & generator ) override {
 		int_distribution_t <uint32_t> dist;
 
-		uint32_t * p_stdin = m_stdin.data<uint32_t>();
-		uint8_t * p_exp = m_expected.data<uint8_t>();
+		uint32_t *	p_stdin	= m_stdin.data<uint32_t>();
+		uint8_t *	p_exp	= m_expected.data<uint8_t>();
 
 		for ( size_t i = 0; i < t_pixels; i++ ) {
 			uint32_t value = dist( generator );
