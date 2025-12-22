@@ -19,17 +19,6 @@ public:
 		uint32_t * pB = pA + t_N2;
 		uint32_t * pR = m_expected.data<uint32_t>();
 
-#if 0
-    for (int i = 0; i < N; i++) {
-        for (int j = 0; j < N; j++) {
-            int sum = 0;
-            for (int k = 0; k < N; k++) {
-                sum += matrix_a[i][k] * matrix_b[k][j];
-            }
-            matrix_c[i][j] = sum;
-        }
-    }
-#endif
 		uint32_t * pT = new (std::nothrow) uint32_t [t_N2];
 		if ( !pT ) return false;
 
@@ -57,24 +46,6 @@ public:
 
 		delete [] pT;
 
-#if 0
-		for ( size_t i = 0; i < t_N2 * 2; i++ ) {
-			pA[i] = dist( generator );
-		}
-
-		printf( "*" );
-		fflush( stdout );
-
-		for ( size_t i = 0; i < t_N; i++ ) {
-			for ( size_t j = 0; j < t_N; j++ ) {
-				int sum = 0;
-				for ( size_t k = 0; k < t_N; k++ ) {
-					sum += pA[i * t_N + k] * pB[k * t_N + j];
-				}
-				pR[i * t_N + j] = sum;
-			}
-		}
-#endif
 		return true;
 	}
 }; // class task_18
